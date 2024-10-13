@@ -1,0 +1,85 @@
+﻿@page "/userinf" 
+@using RafahiaBlazorApp.Models
+@using RafahiaBlazorApp.Controllers
+@inherits LayoutComponentBase
+@inject IJSRuntime js
+
+
+@*@rendermode InteractiveServer*@
+
+<div class = "container">
+	<div class="row">
+		<div class="col-md-4">
+			<h2>User</h2>
+			<EditForm Model="@userInfo" OnValidSubmit="UserInfoClicked">
+				<DataAnnotationsValidator/>
+				<div class="form-group">
+					<lable class="form-label">Email</lable>
+					<InputText @bind-Value="userInfo.Email" class="form-control"></InputText>
+				</div>
+				<div class="form-group">
+					<button class="button btn-primary" type="submit">UserInfo</button>
+				</div>
+				<ValidationSummary/>
+			</EditForm>
+		</div>
+
+	</div>
+
+</div>
+
+<h1>User Informetion</h1>
+@if (response == null)
+{
+    <p><em>Plase Enter Email...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>UserName</th>
+                <th>Token</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <td>@response.Email.ToString()</td>
+                    <td>@response.Username.ToString()</td>
+                    <td>@response.Token.ToString()</td>
+                </tr>
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private AuthModel? response;
+
+	public UserInfo userInfo = new();
+
+	private async Task UserInfoClicked()
+	{
+		 response = await authService.GetUserinfoAsync(userInfo);
+		if (!response.IsAuthenticated)
+		{
+			await js.InvokeVoidAsync("alert", response.Message);
+			return;
+		}
+
+	  //   var customAuthState = (CustomAuthenticationStateProvider)AuthStateProvider;
+		 //customAuthState.UpdateAuthState(response.Token);
+		//await customAuthState.UpdateAuthState(new CustomUserClaims
+		//	{
+		//		UserName = response.Username,
+		//		Email = response.Email
+		//	});
+		//await js.InvokeVoidAsync("alert", response.Token);
+        
+
+		
+		//NavManager.NavigateTo("/", forceLoad: true);
+
+	}
+}

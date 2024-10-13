@@ -1,0 +1,101 @@
+﻿
+@page "/Starting"
+@inject IJSRuntime js
+
+<div class="in-mian">
+        <div class="cont">
+            <div class="form sign-in">
+                <h2>Welcome</h2>
+                <div class="input-container">
+                  <input type="text" id="input" required="">
+                  <label for="input" class="label">Email</label>
+                  
+                </div>
+                <div class="input-container">
+                  <input type="text" id="input" required="">
+                  <label for="input" class="label">Password</label>
+                  
+                </div>
+                <a href="" class="forgot-pass">Forgot password?</a>
+                <button type="button" class="submit">Sign In</button>
+             
+            </div>
+            <div class="sub-cont">
+                <div class="img">
+                    <div class="img__text m--up">
+                     
+                        <h3>Don't have an account? Please Sign up!</h3>
+                    </div>
+                    <div class="img__text m--in">
+                    
+                        <h3>If you already has an account, just sign in.</h3>
+                    </div>
+                    <div class="img__btn" @onclick="CallMove">
+                        <span  class="m--up">Sign Up</span>
+                        <span  class="m--in">Sign In</span>
+                    </div>
+                </div>
+                <div class="form sign-up">
+                    <h2>Create your Account</h2>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">first Name</label>
+                      
+                    </div>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">Last name</label>
+                      
+                    </div>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">User name</label>
+                      
+                    </div>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">Your Email</label>
+                      
+                    </div>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">Password</label>
+                      
+                    </div>
+                    <div class="input-container">
+                      <input type="text" id="input" required="">
+                      <label for="input" class="label">phone</label>
+                      
+                    </div>
+                    <button type="button" class="submit">Sign Up</button>
+                    
+                </div>
+            </div>
+        </div>
+ 
+
+
+        <!--END  LOG-IN --->
+        
+
+
+
+
+
+
+
+
+
+      </div>
+
+@code {
+    
+    public async Task CallMove()
+    {
+        await js.InvokeVoidAsync("Move");
+    }
+
+}
+
+
+

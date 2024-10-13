@@ -1,0 +1,46 @@
+﻿@page "/userindex"
+
+<PageTitle>Weather forecast</PageTitle>
+
+@using RafahiaBlazorApp.Data
+
+<h1>Users</h1>
+
+
+@if (usermodel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userm in usermodel)
+            {
+                <tr>
+                    <td>@userm.Username</td>
+                    <td>@userm.FirstName</td>
+                    <td>@userm.LastName</td>
+                    <td>@userm.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private UserModelDto[]? usermodel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usermodel =  await authService.GetUserAsync();
+    }
+}

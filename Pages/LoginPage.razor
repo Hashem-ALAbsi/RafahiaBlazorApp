@@ -1,0 +1,64 @@
+﻿@page "/login" 
+@using RafahiaBlazorApp.Models
+@using RafahiaBlazorApp.Controllers
+@inherits LayoutComponentBase
+@inject IJSRuntime js
+
+
+@*@rendermode InteractiveServer*@
+
+<div class = "container">
+	<div class="row">
+		<div class="col-sm-4">
+			<h2>Login</h2>
+			<EditForm Model="@Login" OnValidSubmit="LoginClicked">
+				<DataAnnotationsValidator/>
+				<div class="form-group">
+					<lable class="form-label">Email</lable>
+					<InputText @bind-Value="Login.Email" class="form-control"></InputText>
+				</div>
+				<div class="form-group">
+					<lable class="form-label">Password</lable>
+					<InputText @bind-Value="Login.Password" class="form-control"></InputText>
+				</div>
+				<div class="form-group mt-3">
+					<button class="btn btn-primary" type="submit">Login</button>
+				</div>
+				<ValidationSummary/>
+			</EditForm>
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+@code {
+
+	public TokenRequestModel Login = new();
+
+	private async Task LoginClicked()
+	{
+		AuthModel response = await authService.GetTokenAsync(Login);
+		if (!response.IsAuthenticated)
+		{
+			await js.InvokeVoidAsync("alert", response.Message);
+			return;
+		}
+
+	  //   var customAuthState = (CustomAuthenticationStateProvider)AuthStateProvider;
+		 //customAuthState.UpdateAuthState(response.Token);
+		//await customAuthState.UpdateAuthState(new CustomUserClaims
+		//	{
+		//		UserName = response.Username,
+		//		Email = response.Email
+		//	});
+		await js.InvokeVoidAsync("alert", response.Message);
+		
+		NavManager.NavigateTo("/userindex", forceLoad: true);
+
+	}
+}
